@@ -1,0 +1,47 @@
+MODULE = board
+
+DIRS = $(RIOTBOARD)/pi3
+
+## the cpu to build for
+export CPU = bcm2837
+
+FLASHER = $(RIOTBOARD)/$(BOARD)/dist/flash.sh
+
+# configure serial interface
+# export TERMFLAGS += -tg -p "$(PORT)"
+# include $(RIOTMAKE)/tools/serial.inc.mk
+
+export CFLAGS_CPU   = -march=armv7-a -mtune=cortex-a7 -mfloat-abi=hard -nostdlib
+
+export CFLAGS_DBG  ?= -g
+
+export CFLAGS_OTHER = -std=gnu99 -Wno-psabi -fsigned-char -nostdlib -Wno-implicit -mfloat-abi=softfp 
+
+export CFLAGS += $(CFLAGS_CPU) $(CFLAGS_LINK) $(CFLAGS_DBG) $(CFLAGS_OPT) $(CFLAGS_OTHER)
+
+# assembly flags
+# export ASFLAGS += $(CFLAGS_CPU) $(CFLAGS_DBG)
+
+export LINKFLAGS += -T$(RIOTCPU)/$(CPU)/ldscripts/$(CPU).ld
+
+# -lc tells to link with libc.a
+# export LINKFLAGS += -lc
+# export LINKFLAGS += -Map kernel.map
+
+
+# use the nano-specs of Newlib when available
+# USEMODULE += newlib_nano
+
+ifeq ($(PORT),)
+  export PORT = /dev/ttyUSB0
+endif
+export FFLAGS = $(PORT) $(HEXFILE)
+
+# INCLUDES += -I$(RIOTBOARD)/common/msba2/include
+# INCLUDES += -I$(RIOTBOARD)/common/msba2/drivers/include
+
+#objcopy flag
+export OFLAGS = -O binary
+
+export UNDEF += $(BINDIR)/cpu/startup.o
+
