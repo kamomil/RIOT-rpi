@@ -9,4 +9,6 @@ Then `cd examples/hello-world/` and `make`
 The output file *bin/pi3/hello-world.hex* is the *kernel7.img* in the /boot of rpi.
 The example shows uart usage from two threads, with baudrate 115200.
 
+The code is mostly based on the [freertos port for raspberry pi](https://github.com/Forty-Tw0/RaspberryPi-FreeRTOS), and also [bare metal examples](https://github.com/dwelch67/raspberrypi).
+
 

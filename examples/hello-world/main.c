@@ -70,9 +70,6 @@ int main(void)
     //printf("This board features a(n) %s MCU.\n", RIOT_MCU);
 
     //prvSetupTimerInterrupt();
-    int soft;
-    int hard;
-    int val;
     volatile i = 0;
     while(1){
         for(i=0;i<100000;i++)
@@ -81,11 +78,7 @@ int main(void)
         for(i=0;i<100000;i++)
             ;
         SetGpio(47,1);
-        timer_vals(&soft,&hard,&val);
         hexstring(0xabcdefab);
-        //hexstring(soft);
-        //hexstring(hard);
-        //hexstring(val);
 
 
         xtimer_sleep(5);
